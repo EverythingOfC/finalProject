@@ -15,6 +15,7 @@ public class MemberController {
         System.out.println("Name: " + m.getName());
         System.out.println("Phone: " + m.getPhone());
         System.out.println("Address: " + m.getAddress());
+        System.out.println("Authority: " + (m.isRoot()? "관리자" : "사용자"));
     }
 
     public void requestUpdateProfile(Member m) {

@@ -11,7 +11,6 @@ import java.util.*;
 /**
  * PIMS(Personal Information Management System)<br>
  * 개인 정보를 관리할 수 있는 프로그램<br>
- *
  */
 public class PimsApplication {
     public static MemberController memberController;
@@ -19,13 +18,25 @@ public class PimsApplication {
     public static MemberRepository memberRepository;
     public static Map<String, Member> session;
     public static List<Member> memberPersistence; // File or
+
     static void lookup() {
         memberPersistence = new ArrayList<>();
         session = new HashMap<>();
         memberRepository = new MemberRepository();
         memberService = new MemberService();
         memberController = new MemberController();
-    }
+
+        for (int i = 1; i <= 10; i++) {
+            Member member = new Member();
+            member.setEmail("root_"+i+"_202212018@induk.ac.kr");
+            member.setPw(String.valueOf(i));
+            member.setName("root"+i);
+            member.setPhone("010-9659-979"+i);
+            member.setAddress("서울시 노원구 월계동 "+i);
+            member.setRoot(true);
+            PimsApplication.memberController.requestRegister(member);
+        }
+}
 
     public static void main(String[] args) {
         PimsApplication.lookup(); // 의존(dependency) 관계가 있는 객체를 주입합
@@ -36,12 +47,12 @@ public class PimsApplication {
 
         int menu;
         do {
-            if(session.get("login") != null) {
+            if (session.get("login") != null) {
                 isLogin = true;
             } else
                 isLogin = false;
             menu = navView.showMenu(isLogin, isRoot);
-        } while(menu != 0); // 종료 메뉴외에는 종료
+        } while (menu != 0); // 종료 메뉴외에는 종료
     }
 }
 
